@@ -34,7 +34,6 @@ const db = mysql.createConnection(
     console.log(`Connected to the company_db database.`)
 );
 
-
 // Inquire Prompts
 // What would you like to do?
 const initQuestion = [
@@ -42,10 +41,74 @@ const initQuestion = [
         type: "list",
         name: "selectList",
         message: "What would you like to do?",
-        choices: ["View all employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", "View All Departments", "Add Department", "Quit"]
+        choices: [
+            "View All Departments",
+            "View All Roles", 
+            "View all employees", 
+            "Add Department",
+            "Add Role", 
+            "Add Employee", 
+            "Update Employee Role",   
+            "Quit"
+        ]
     },
 ];
 
+// Add Deparment
+const addDept = [
+    {
+        type: "input",
+        name: "addDept",
+        message: "What department would you like to add?",
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("Please enter a department to add");
+                return false;
+            }
+        },
+    },
+];
+
+// Add Role
+const addRole = [
+    {
+        type: "input",
+        name: "addRole",
+        message: "What role would you like to add?",
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("Please enter a role to add");
+                return false;
+            }
+        },
+    },
+
+    {
+        type: "input",
+        name: "addRoleSalary",
+        message: "What is the salary for this role",
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("Please enter a salary");
+                return false;
+            }
+        },
+    },
+
+    {
+        type: "list",
+        name: "addRoleDept",
+        message: "What department is this role a part of?",
+        choices: ["Tech Support", "Account Coordinators", "Asset Recovery", "Engineering", "IT", "Shipping"]
+
+    },
+];
 
 // Add Employee
 const addEmployee = [
@@ -123,62 +186,6 @@ const updateEmpRole = [
     },
 ];
 
-// Add Role
-const addRole = [
-    {
-        type: "input",
-        name: "addRole",
-        message: "What role would you like to add?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a role to add");
-                return false;
-            }
-        },
-    },
-
-    {
-        type: "input",
-        name: "addRoleSalary",
-        message: "What is the salary for this role",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a salary");
-                return false;
-            }
-        },
-    },
-
-    {
-        type: "list",
-        name: "addRoleDept",
-        message: "What department is this role a part of?",
-        choices: ["Tech Support", "Account Coordinators", "Asset Recovery", "Engineering", "IT", "Shipping"]
-
-    },
-];
-
-// Add Deparment
-const addDept = [
-    {
-        type: "input",
-        name: "addDept",
-        message: "What department would you like to add?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a department to add");
-                return false;
-            }
-        },
-    },
-];
-
 // Quit
 
 function init() {
@@ -187,7 +194,23 @@ function init() {
         .prompt(initQuestion)
         .then((response) => {
             switch (response) {
+                case "View All Departments":
+
+                    break;
+
+                case "View All Roles":
+
+                    break;
+
                 case "View all employees":
+
+                    break;
+
+                case "Add Department":
+
+                    break;
+
+                case "Add Role":
 
                     break;
 
@@ -196,22 +219,6 @@ function init() {
                     break;
 
                 case "Update Employee Role":
-
-                    break;
-
-                case "View All Roles":
-
-                    break;
-
-                case "Add Role":
-
-                    break;
-
-                case "View All Departments":
-
-                    break;
-
-                case "Add Department":
 
                     break;
 
