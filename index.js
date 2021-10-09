@@ -105,7 +105,14 @@ const addRole = [
         type: "list",
         name: "addRoleDept",
         message: "What department is this role a part of?",
-        choices: ["Tech Support", "Account Coordinators", "Asset Recovery", "Engineering", "IT", "Shipping"]
+        choices: [
+            "Tech Support", 
+            "Account Coordinators", 
+            "Asset Recovery", 
+            "Engineering", 
+            "IT", 
+            "Shipping"
+        ]
 
     },
 ];
