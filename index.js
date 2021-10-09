@@ -24,11 +24,11 @@ const cTable = require('console.table');
 // Set up database connection
 const db = mysql.createConnection(
     {
-        host: "local",
+        host: process.env.DB_HOST,
         // MySQL username,
-        user: "root",
+        user: process.env.DB_USER,
         // MySQL password
-        password: "s!LUJ^St2N-U*6pT",
+        password: process.env.DB_PASS,
         database: "company_db"
     },
     console.log(`Connected to the company_db database.`)
