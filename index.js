@@ -99,8 +99,15 @@ const addEmployee = [
 // Update Employee Role
 const updateEmpRole = [
     {
-        type: "input",
+        type: "list",
         name: "updateRole",
+        message: "Which Employee would you like to update",
+        choices: []
+    },
+
+    {
+        type: "input",
+        name: "updateRole2",
         message: "What is the Employee's new role",
         validate: answer => {
             if (answer) {
@@ -124,6 +131,34 @@ const addRole = [
                 return true;
             } else {
                 console.log("Please enter a role to add");
+                return false;
+            }
+        },
+    },
+
+    {
+        type: "input",
+        name: "addRoleSalary",
+        message: "What is the salary for this role",
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("Please enter a salary");
+                return false;
+            }
+        },
+    },
+
+    {
+        type: "input",
+        name: "addRoleDept",
+        message: "What department is this role a part of?",
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("Please enter a department for this role");
                 return false;
             }
         },
