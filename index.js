@@ -151,17 +151,11 @@ const addRole = [
     },
 
     {
-        type: "input",
+        type: "list",
         name: "addRoleDept",
         message: "What department is this role a part of?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a department for this role");
-                return false;
-            }
-        },
+        choices: ["Tech Support", "Account Coordinators", "Asset Recovery", "Engineering", "IT", "Shipping"]
+        
     },
 ];
 
