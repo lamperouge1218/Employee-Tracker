@@ -21,6 +21,7 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
 
+// Set up database connection
 const db = mysql.createConnection(
     {
         host: 'localhost',
@@ -33,6 +34,8 @@ const db = mysql.createConnection(
     console.log(`Connected to the company_db database.`)
 );
 
+
+// Inquire Prompts
 // What would you like to do?
 const openingQuestion = [
     {
@@ -43,7 +46,7 @@ const openingQuestion = [
     },
 ];
 
-// View All Employees
+
 // Add Employee
 const addEmployee = [
     {
@@ -119,7 +122,7 @@ const updateEmpRole = [
         },
     },
 ];
-// View All Roles
+
 // Add Role
 const addRole = [
     {
@@ -155,11 +158,10 @@ const addRole = [
         name: "addRoleDept",
         message: "What department is this role a part of?",
         choices: ["Tech Support", "Account Coordinators", "Asset Recovery", "Engineering", "IT", "Shipping"]
-        
+
     },
 ];
 
-// View All Departments
 // Add Deparment
 const addDept = [
     {
@@ -176,4 +178,51 @@ const addDept = [
         },
     },
 ];
-  // Quit
+
+// Quit
+
+function init() {
+    console.log("Welcome to the Employee Management System");
+    inquirer
+        .prompt(openingQuestion)
+        .then((response) => {
+            switch (response) {
+                case "View all employees":
+
+                    break;
+
+                case "Add Employee":
+
+                    break;
+
+                case "Update Employee Role":
+
+                    break;
+
+                case "View All Roles":
+
+                    break;
+
+                case "Add Role":
+
+                    break;
+
+                case "View All Departments":
+
+                    break;
+
+                case "Add Department":
+
+                    break;
+
+                case "Quit":
+
+                    break;
+
+                default:
+                    break;
+            }
+        })
+}
+
+init();
