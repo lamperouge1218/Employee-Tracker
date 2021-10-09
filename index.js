@@ -37,7 +37,7 @@ const db = mysql.createConnection(
 
 // Inquire Prompts
 // What would you like to do?
-const openingQuestion = [
+const initQuestion = [
     {
         type: "list",
         name: "selectList",
@@ -184,7 +184,7 @@ const addDept = [
 function init() {
     console.log("Welcome to the Employee Management System");
     inquirer
-        .prompt(openingQuestion)
+        .prompt(initQuestion)
         .then((response) => {
             switch (response) {
                 case "View all employees":
