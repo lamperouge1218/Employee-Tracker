@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS _role
 CREATE TABLE _role (
   id INT AUTO_INCREMENT,
   title VARCHAR(30),
-  salaray DECIMAL NOT NULL,
+  salary DECIMAL NOT NULL,
   department_id INT,
   PRIMARY KEY (id),
   FOREIGN KEY (department_id)
