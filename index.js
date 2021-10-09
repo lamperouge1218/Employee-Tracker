@@ -43,12 +43,12 @@ const initQuestion = [
         message: "What would you like to do?",
         choices: [
             "View All Departments",
-            "View All Roles", 
-            "View all employees", 
+            "View All Roles",
+            "View all employees",
             "Add Department",
-            "Add Role", 
-            "Add Employee", 
-            "Update Employee Role",   
+            "Add Role",
+            "Add Employee",
+            "Update Employee Role",
             "Quit"
         ]
     },
@@ -106,14 +106,13 @@ const addRole = [
         name: "addRoleDept",
         message: "What department is this role a part of?",
         choices: [
-            "Tech Support", 
-            "Account Coordinators", 
-            "Asset Recovery", 
-            "Engineering", 
-            "IT", 
+            "Tech Support",
+            "Account Coordinators",
+            "Asset Recovery",
+            "Engineering",
+            "IT",
             "Shipping"
         ]
-
     },
 ];
 
