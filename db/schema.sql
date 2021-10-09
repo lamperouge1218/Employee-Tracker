@@ -3,14 +3,14 @@ CREATE DATABASE company_db;
 
 USE company_db;
 
-DROP TABLE IF EXISTS department
+DROP TABLE IF EXISTS department;
 CREATE TABLE department (
   id INT AUTO_INCREMENT,
   name VARCHAR(30),
   PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS _role
+DROP TABLE IF EXISTS _role;
 CREATE TABLE _role (
   id INT AUTO_INCREMENT,
   title VARCHAR(30),
@@ -22,7 +22,7 @@ CREATE TABLE _role (
   ON DELETE SET NULL
 );
 
-DROP TABLE IF EXISTS employee
+DROP TABLE IF EXISTS employee;
 CREATE TABLE employee (
     id INT AUTO_INCREMENT,
     first_name VARCHAR(30),
@@ -31,6 +31,6 @@ CREATE TABLE employee (
     manager_id INT DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (role_id)
-    REFERENCES role(id)
+    REFERENCES _role(id)
     ON DELETE SET NULL
 );

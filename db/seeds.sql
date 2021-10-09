@@ -1,4 +1,4 @@
-INSERT INTO department(department_name)
+INSERT INTO department(name)
 VALUES 
     ("Tech Support"),
     ("Account Coordinators"),
@@ -7,7 +7,7 @@ VALUES
     ("IT"),
     ("Shipping");
 
-INSERT INTO _role(title, salary, deparment_id)
+INSERT INTO _role(title, salary, department_id)
 VALUES
     ("Tech Support Specialist", 36000, 1),
     ("Senior Tech Support", 65000, 1),
