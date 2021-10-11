@@ -18,22 +18,9 @@
 
 // Requires 
 const inquirer = require('inquirer');
-// const mysql = require('mysql2');
-const cTable = require('console.table');
-const { listDepartments, listRoles, listEmployees, db } = require("./queries/queries");
+// const cTable = require('console.table');
+const queries = require("./queries/queries");
 
-// Set up database connection
-// const db = mysql.createConnection(
-//     {
-//         host: process.env.DB_HOST,
-//         // MySQL username,
-//         user: process.env.DB_USER,
-//         // MySQL password
-//         password: process.env.DB_PASS,
-//         database: "company_db"
-//     },
-//     console.log(`Connected to the company_db database.`)
-// );
 
 // Inquire Prompts
 // What would you like to do?
@@ -55,143 +42,143 @@ const initQuestion = [
     },
 ];
 
-// Add Deparment
-const addDept = [
-    {
-        type: "input",
-        name: "addDept",
-        message: "What department would you like to add?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a department to add");
-                return false;
-            }
-        },
-    },
-];
+// // Add Department
+// const addDept = [
+//     {
+//         type: "input",
+//         name: "addDept",
+//         message: "What department would you like to add?",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a department to add");
+//                 return false;
+//             }
+//         },
+//     },
+// ];
 
-// Add Role
-const addRole = [
-    {
-        type: "input",
-        name: "addRole",
-        message: "What role would you like to add?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a role to add");
-                return false;
-            }
-        },
-    },
+// // Add Role
+// const addRole = [
+//     {
+//         type: "input",
+//         name: "addRole",
+//         message: "What role would you like to add?",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a role to add");
+//                 return false;
+//             }
+//         },
+//     },
 
-    {
-        type: "input",
-        name: "addRoleSalary",
-        message: "What is the salary for this role",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a salary");
-                return false;
-            }
-        },
-    },
+//     {
+//         type: "input",
+//         name: "addRoleSalary",
+//         message: "What is the salary for this role",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a salary");
+//                 return false;
+//             }
+//         },
+//     },
 
-    {
-        type: "list",
-        name: "addRoleDept",
-        message: "What department is this role a part of?",
-        choices: [
-            "Tech Support",
-            "Account Coordinators",
-            "Asset Recovery",
-            "Engineering",
-            "IT",
-            "Shipping"
-        ]
-    },
-];
+//     {
+//         type: "list",
+//         name: "addRoleDept",
+//         message: "What department is this role a part of?",
+//         choices: [
+//             "Tech Support",
+//             "Account Coordinators",
+//             "Asset Recovery",
+//             "Engineering",
+//             "IT",
+//             "Shipping"
+//         ]
+//     },
+// ];
 
-// Add Employee
-const addEmployee = [
-    {
-        type: "input",
-        name: "firstName",
-        message: "What is the Employee's first name?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a first name");
-                return false;
-            }
-        },
-    },
+// // Add Employee
+// const addEmployee = [
+//     {
+//         type: "input",
+//         name: "firstName",
+//         message: "What is the Employee's first name?",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a first name");
+//                 return false;
+//             }
+//         },
+//     },
 
-    {
-        type: "input",
-        name: "lastName",
-        message: "What is the Employee's last name?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a last name");
-                return false;
-            }
-        },
-    },
+//     {
+//         type: "input",
+//         name: "lastName",
+//         message: "What is the Employee's last name?",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a last name");
+//                 return false;
+//             }
+//         },
+//     },
 
-    {
-        type: "input",
-        name: "empRole",
-        message: "What is the Employee's role?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a role");
-                return false;
-            }
-        },
-    },
+//     {
+//         type: "input",
+//         name: "empRole",
+//         message: "What is the Employee's role?",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a role");
+//                 return false;
+//             }
+//         },
+//     },
 
-    {
-        type: "list",
-        name: "empManager",
-        message: "Who is the Employee's manager?",
-        choices: [],
-    },
-];
+//     {
+//         type: "list",
+//         name: "empManager",
+//         message: "Who is the Employee's manager?",
+//         choices: [],
+//     },
+// ];
 
-// Update Employee Role
-const updateEmpRole = [
-    {
-        type: "list",
-        name: "updateRole",
-        message: "Which Employee would you like to update",
-        choices: []
-    },
+// // Update Employee Role
+// const updateEmpRole = [
+//     {
+//         type: "list",
+//         name: "updateRole",
+//         message: "Which Employee would you like to update",
+//         choices: []
+//     },
 
-    {
-        type: "input",
-        name: "updateRole2",
-        message: "What is the Employee's new role",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a new role");
-                return false;
-            }
-        },
-    },
-];
+//     {
+//         type: "input",
+//         name: "updateRole2",
+//         message: "What is the Employee's new role",
+//         validate: answer => {
+//             if (answer) {
+//                 return true;
+//             } else {
+//                 console.log("Please enter a new role");
+//                 return false;
+//             }
+//         },
+//     },
+// ];
 
 // Quit
 
@@ -200,60 +187,61 @@ function init() {
     inquirer
         .prompt(initQuestion)
         .then(response => {
-                switch (response.selectList) {
-                    case "View All Departments":
-                        listDepartments();
-                        break;
+            console.log(response);
+            switch (response.selectList) {
+                case "View All Departments":
+                    queries.listDepartments();
+                    break;
 
-                    case "View All Roles":
-                        listRoles();
-                        break;
+                //             //     // case "View All Roles":
+                //             //     //     listRoles();
+                //             //     //     break;
 
-                    case "View all employees":
-                        listEmployees();
-                        break;
+                //             //     // case "View all employees":
+                //             //     //     listEmployees();
+                //             //     //     break;
 
-                    // case "Add Department":
-                    //     addDeptartment()
-                    //     break;
-                    // case "Add Role":
-                    //     addRoles()
-                    //     break;
-                    // case "Add Employee":
-                    //     addEmployees()
-                    //     break;
-                    // case "Update Employee Role":
-                    //     break;
-                    // case "Quit":
-                    //     break;
-                    default:
-                        break;
-                }
-            })
-};
-
-function addDeptartment() {
-    inquirer
-        .prompt(addDept)
-        .then((response) => {
-            // Query function to put information added into the dept table
+                //             //     // case "Add Department":
+                //             //     //     addDeptartment()
+                //             //     //     break;
+                //             //     // case "Add Role":
+                //             //     //     addRoles()
+                //             //     //     break;
+                //             //     // case "Add Employee":
+                //             //     //     addEmployees()
+                //             //     //     break;
+                //             //     // case "Update Employee Role":
+                //             //     //     break;
+                //             //     // case "Quit":
+                //             //     //     break;
+                //             //     default:
+                //             //         break;
+            }
         })
 };
 
-function addRoles() {
-    inquirer
-        .prompt(addRole)
-        .then((response) => {
-            // Query function to put information added into the role table
-        })
-};
+// function addDeptartment() {
+//     inquirer
+//         .prompt(addDept)
+//         .then((response) => {
+//             // Query function to put information added into the dept table
+//         })
+// };
 
-function addEmployees() {
-    inquirer
-        .prompt(addEmployee)
-        .then((response) => {
-            // Query function to put information added into the employee table
-        })
-};
+// function addRoles() {
+//     inquirer
+//         .prompt(addRole)
+//         .then((response) => {
+//             // Query function to put information added into the role table
+//         })
+// };
+
+// function addEmployees() {
+//     inquirer
+//         .prompt(addEmployee)
+//         .then((response) => {
+//             // Query function to put information added into the employee table
+//         })
+// };
 
 init();
