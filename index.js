@@ -18,7 +18,7 @@
 
 // Requires 
 const inquirer = require('inquirer');
-// const cTable = require('console.table');
+const cTable = require('console.table');
 const queries = require("./queries/queries");
 
 

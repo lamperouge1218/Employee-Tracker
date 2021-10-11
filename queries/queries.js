@@ -54,14 +54,7 @@ const addRole = [
         type: "list",
         name: "addRoleDept",
         message: "What department is this role a part of?",
-        choices: [
-            "Tech Support",
-            "Account Coordinators",
-            "Asset Recovery",
-            "Engineering",
-            "IT",
-            "Shipping"
-        ]
+        choices: []
     },
 ];
 
@@ -119,12 +112,12 @@ const addEmployee = [
 
 // Database query to select all information from the department table.
 function listDepartments() {
-    db.query('SELECT * FROM department', function (err, results) {  
+    db.query('SELECT * FROM department', function (err, results) {
         if (err) {
             throw err;
-        }      
+        }
         console.table(results);
-      });
+    });
 };
 
 // Database query to select all information from the _role table.
@@ -132,9 +125,9 @@ function listRoles() {
     db.query('SELECT * FROM _role', function (err, results) {
         if (err) {
             throw err;
-        }      
+        }
         console.table(results);
-      });
+    });
 };
 
 // Database query to select all information from the employee table.
@@ -142,9 +135,9 @@ function listEmployees() {
     db.query('SELECT * FROM employee', function (err, results) {
         if (err) {
             throw err;
-        }      
+        }
         console.table(results);
-      });
+    });
 };
 
 function addDepartment() {
@@ -157,12 +150,24 @@ function addDepartment() {
 };
 
 function addRoles() {
-    inquirer
-        .prompt(addRole)
-        .then((response) => {
-            console.log(response);
-            // Query function to put information added into the role table
+    db.query("SELECT name FROM department", function (err, results) {
+        if (err) {
+            throw err;
+        }
+        results.forEach(department => {
+            // console.log(department.name)
+            addRole[2].choices.push(department.name)
+            console.log(addRole[2].choices);
         })
+        
+        inquirer
+            .prompt(addRole)
+            .then((response) => {
+                console.log(response);
+                // Query function to put information added into the role table
+            });
+    });
+
 };
 
 function addEmployees() {
@@ -171,6 +176,7 @@ function addEmployees() {
         .then((response) => {
             console.log(response);
             // Query function to put information added into the employee table
+            // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${response.empRole}, ${response.empManager},`))
         })
 };
 
