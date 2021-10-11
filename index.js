@@ -213,15 +213,15 @@ function init() {
                     break;
 
                 case "Add Department":
-
+                    addDept()
                     break;
 
                 case "Add Role":
-
+                    addRole()
                     break;
 
                 case "Add Employee":
-
+                    addEmployee()
                     break;
 
                 case "Update Employee Role":
@@ -238,4 +238,27 @@ function init() {
         })
 }
 
+function addDept() {
+    inquirer
+    .prompt(addDept)
+    .then((response) => {
+        // Query function to put information added into the dept table
+    })
+}
+
+function addRole() {
+    inquirer
+    .prompt(addRole)
+    .then((response) => {
+        // Query function to put information added into the role table
+    })
+}
+
+function addEmployee() {
+    inquirer
+    .prompt(addEmployee)
+    .then((response) => {
+        // Query function to put information added into the employee table
+    })
+}
 init();
