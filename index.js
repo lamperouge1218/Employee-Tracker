@@ -42,143 +42,29 @@ const initQuestion = [
     },
 ];
 
-// // Add Department
-// const addDept = [
-//     {
-//         type: "input",
-//         name: "addDept",
-//         message: "What department would you like to add?",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a department to add");
-//                 return false;
-//             }
-//         },
-//     },
-// ];
+// Update Employee Role
+const updateEmpRole = [
+    {
+        type: "list",
+        name: "updateRole",
+        message: "Which Employee would you like to update",
+        choices: []
+    },
 
-// // Add Role
-// const addRole = [
-//     {
-//         type: "input",
-//         name: "addRole",
-//         message: "What role would you like to add?",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a role to add");
-//                 return false;
-//             }
-//         },
-//     },
-
-//     {
-//         type: "input",
-//         name: "addRoleSalary",
-//         message: "What is the salary for this role",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a salary");
-//                 return false;
-//             }
-//         },
-//     },
-
-//     {
-//         type: "list",
-//         name: "addRoleDept",
-//         message: "What department is this role a part of?",
-//         choices: [
-//             "Tech Support",
-//             "Account Coordinators",
-//             "Asset Recovery",
-//             "Engineering",
-//             "IT",
-//             "Shipping"
-//         ]
-//     },
-// ];
-
-// // Add Employee
-// const addEmployee = [
-//     {
-//         type: "input",
-//         name: "firstName",
-//         message: "What is the Employee's first name?",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a first name");
-//                 return false;
-//             }
-//         },
-//     },
-
-//     {
-//         type: "input",
-//         name: "lastName",
-//         message: "What is the Employee's last name?",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a last name");
-//                 return false;
-//             }
-//         },
-//     },
-
-//     {
-//         type: "input",
-//         name: "empRole",
-//         message: "What is the Employee's role?",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a role");
-//                 return false;
-//             }
-//         },
-//     },
-
-//     {
-//         type: "list",
-//         name: "empManager",
-//         message: "Who is the Employee's manager?",
-//         choices: [],
-//     },
-// ];
-
-// // Update Employee Role
-// const updateEmpRole = [
-//     {
-//         type: "list",
-//         name: "updateRole",
-//         message: "Which Employee would you like to update",
-//         choices: []
-//     },
-
-//     {
-//         type: "input",
-//         name: "updateRole2",
-//         message: "What is the Employee's new role",
-//         validate: answer => {
-//             if (answer) {
-//                 return true;
-//             } else {
-//                 console.log("Please enter a new role");
-//                 return false;
-//             }
-//         },
-//     },
-// ];
+    {
+        type: "input",
+        name: "updateRole2",
+        message: "What is the Employee's new role",
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("Please enter a new role");
+                return false;
+            }
+        },
+    },
+];
 
 // Quit
 
@@ -202,15 +88,15 @@ function init() {
                     break;
 
                 case "Add Department":
-                    addDepartment()
+                    queries.addDepartment()
                     break;
 
                 case "Add Role":
-                    addRoles()
+                    queries.addRoles()
                     break;
 
                 case "Add Employee":
-                    addEmployees()
+                    queries.addEmployees()
                     break;
 
                 case "Update Employee Role":
