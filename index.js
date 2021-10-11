@@ -201,15 +201,15 @@ function init() {
         .then((response) => {
             switch (response) {
                 case "View All Departments":
-
+                    listDepartments()
                     break;
 
                 case "View All Roles":
-
+                    listRoles()
                     break;
 
                 case "View all employees":
-
+                    listEmployees()
                     break;
 
                 case "Add Department":
