@@ -32,7 +32,7 @@ const initQuestion = [
         choices: [
             "View All Departments",
             "View All Roles",
-            "View all employees",
+            "View All Employees",
             "Add Department",
             "Add Role",
             "Add Employee",
@@ -193,55 +193,36 @@ function init() {
                     queries.listDepartments();
                     break;
 
-                //             //     // case "View All Roles":
-                //             //     //     listRoles();
-                //             //     //     break;
+                case "View All Roles":
+                    queries.listRoles();
+                    break;
 
-                //             //     // case "View all employees":
-                //             //     //     listEmployees();
-                //             //     //     break;
+                case "View All Employees":
+                    queries.listEmployees();
+                    break;
 
-                //             //     // case "Add Department":
-                //             //     //     addDeptartment()
-                //             //     //     break;
-                //             //     // case "Add Role":
-                //             //     //     addRoles()
-                //             //     //     break;
-                //             //     // case "Add Employee":
-                //             //     //     addEmployees()
-                //             //     //     break;
-                //             //     // case "Update Employee Role":
-                //             //     //     break;
-                //             //     // case "Quit":
-                //             //     //     break;
-                //             //     default:
-                //             //         break;
+                case "Add Department":
+                    addDepartment()
+                    break;
+
+                case "Add Role":
+                    addRoles()
+                    break;
+
+                case "Add Employee":
+                    addEmployees()
+                    break;
+
+                case "Update Employee Role":
+                    break;
+
+                case "Quit":
+                    break;
+
+                default:
+                    break;
             }
         })
 };
-
-// function addDeptartment() {
-//     inquirer
-//         .prompt(addDept)
-//         .then((response) => {
-//             // Query function to put information added into the dept table
-//         })
-// };
-
-// function addRoles() {
-//     inquirer
-//         .prompt(addRole)
-//         .then((response) => {
-//             // Query function to put information added into the role table
-//         })
-// };
-
-// function addEmployees() {
-//     inquirer
-//         .prompt(addEmployee)
-//         .then((response) => {
-//             // Query function to put information added into the employee table
-//         })
-// };
 
 init();
