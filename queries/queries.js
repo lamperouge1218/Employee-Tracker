@@ -150,6 +150,7 @@ function addDepartment() {
 };
 
 function addRoles() {
+    addRole[2].choices = [];
     db.query("SELECT name FROM department", function (err, results) {
         if (err) {
             throw err;
