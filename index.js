@@ -68,6 +68,7 @@ const updateEmpRole = [
 
 // Quit
 
+// .then statements that then call init() after the function has been executed???
 function init() {
     console.log("Welcome to the Employee Management System");
     inquirer
@@ -76,7 +77,7 @@ function init() {
             console.log(response);
             switch (response.selectList) {
                 case "View All Departments":
-                    queries.listDepartments();
+                    queries.listDepartments();                    
                     break;
 
                 case "View All Roles":

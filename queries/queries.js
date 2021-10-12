@@ -188,17 +188,24 @@ function addRoles() {
 
 function addEmployees() {
     addEmployee[2].choices = [];
-    addEmployee[3].choices = [];
+    addEmployee[3].choices = ["None", ];
     // db query needs to retun list of existing roles from _roles 
     // and also a list of employees with NULL as manager_id
-    db.query("")
-    inquirer
-        .prompt(addEmployee)
-        .then((response) => {
-            console.log(response);
-            // Query function to put information added into the employee table
-            // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${response.empRole}, ${response.empManager},`))
+    db.query("SELECT id, title FROM _role", function (err, results) {
+        if (err) {
+            throw err;
+        }
+        results.forEach(roleTitleRes => {
+            addEmployee[2].choices.push(roleTitleRes.title)
         })
+    })
+//     inquirer
+//         .prompt(addEmployee)
+//         .then((response) => {
+//             console.log(response);
+//             // Query function to put information added into the employee table
+//             // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${response.empRole}, ${response.empManager},`))
+//         })
 };
 
 module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees }
