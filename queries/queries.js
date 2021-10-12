@@ -190,32 +190,36 @@ function addEmployees() {
     addEmployee[2].choices = [];
     addEmployee[3].choices = ["None",];
 
-    db.query("SELECT _role.id, _role.title, employee.id, employee.first_name, employee.last_name FROM _role INNER JOIN employee ON _role.id = employee.role_id" , function (err, roleResults) {
+    db.query("SELECT _role.id AS role_id, _role.title, employee.id, employee.first_name, employee.last_name FROM _role INNER JOIN employee ON _role.id = employee.role_id WHERE manager_id IS NULL" , function (err, results) {
         if (err) {
             throw err;
         }
-        roleResults.forEach(roleTitleRes => {
-            addEmployee[2].choices.push(roleTitleRes.title)
+        results.forEach(data => {
+            addEmployee[2].choices.push(data.title);
+            addEmployee[3].choices.push(`${data.first_name} ${data.last_name}`)
         })
+        console.log(addEmployee[2].choices);
+        console.log(addEmployee[3].choices);
+
     })
 
-    db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, empResults) {
-        if (err) {
-            throw err;
-        }
-        empResults.forEach(roleManId => {
-            addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
-        })
-        inquirer
-            .prompt(addEmployee)
-            .then((response) => {
-                console.log(response);
-                let empRoleId = "";
-                let empManId = "";
-                // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
-                // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
-            })
-    })
+    // db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, empResults) {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     empResults.forEach(roleManId => {
+    //         addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
+    //     })
+    //     inquirer
+    //         .prompt(addEmployee)
+    //         .then((response) => {
+    //             console.log(response);
+    //             let empRoleId = "";
+    //             let empManId = "";
+    //             // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
+    //             // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+    //         })
+    // })
 
 
 };
