@@ -42,30 +42,6 @@ const initQuestion = [
     },
 ];
 
-// Update Employee Role
-const updateEmpRole = [
-    {
-        type: "list",
-        name: "updateRole",
-        message: "Which Employee would you like to update",
-        choices: []
-    },
-
-    {
-        type: "input",
-        name: "updateRole2",
-        message: "What is the Employee's new role",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a new role");
-                return false;
-            }
-        },
-    },
-];
-
 // Quit function to exit out of application
 function quit () {
     process.exit();
@@ -104,6 +80,7 @@ function init() {
                     break;
 
                 case "Update Employee Role":
+                    queries.updateEmployeeRole();
                     break;
 
                 case "Quit":

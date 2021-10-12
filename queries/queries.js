@@ -103,6 +103,23 @@ const addEmployee = [
     },
 ];
 
+// Update Employee Role
+const updateEmpRole = [
+    {
+        type: "list",
+        name: "updateRole",
+        message: "Which Employee would you like to update",
+        choices: []
+    },
+
+    {
+        type: "list",
+        name: "updateRole2",
+        message: "What is the Employee's new role",
+        choices: []
+    },
+];
+
 // Database query to select all information from the department table.
 function listDepartments() {
     db.query('SELECT * FROM department', function (err, results) {
@@ -201,7 +218,6 @@ function addEmployees() {
         if (err) {
             throw err;
         }
-        console.log(results);
         results.forEach(data => {
             if (data.id !== null) {
                 addEmployee[3].choices.push(`${data.first_name} ${data.last_name}`)
@@ -212,7 +228,6 @@ function addEmployees() {
         inquirer
             .prompt(addEmployee)
             .then((response) => {
-                console.log(response);
                 let empRoleId = "";
                 let empManId = "";
                 results.forEach(data => {
@@ -226,32 +241,35 @@ function addEmployees() {
                     }
 
                 })
-                console.log(empRoleId);
-                console.log(empManId);
-                // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
-                // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+                db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES ("${response.firstName}", "${response.lastName}", ${empRoleId}, ${empManId})`, function (err, results) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.table(results);
+
+                })
             })
     })
+}
 
-    // db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, empResults) {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     empResults.forEach(roleManId => {
-    //         addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
-    //     })
-    // inquirer
-    //     .prompt(addEmployee)
-    //     .then((response) => {
-    //         console.log(response);
-    //         let empRoleId = "";
-    //         let empManId = "";
-    //         // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
-    //         // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
-    //     })
-    // })
+function updateEmployeeRole() {
+    const employeeRoleTable = `
+    SELECT employee.first_name, employee.last_name, employee.role_id, _role.title
+    FROM employee 
+    JOIN _role ON employee.role_id = _role.id`;
 
+    updateEmpRole[0].choices = [];
+    updateEmpRole[1].choices = [];
 
-};
+    db.query(employeeRoleTable, function (err, results) {
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+    })
+    // Get a list of employees pushed onto question array
+    // Provide user a list of available roles to give the employee
+    // WHAT NEEDS TO CHANGE IS THE role_id ON THE EMPLOYEE TABLE
+}
 
-module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees }
+module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees, updateEmployeeRole }
