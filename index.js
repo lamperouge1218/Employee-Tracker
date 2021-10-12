@@ -66,7 +66,10 @@ const updateEmpRole = [
     },
 ];
 
-// Quit
+// Quit function to exit out of application
+function quit () {
+    process.exit();
+}
 
 // .then statements that then call init() after the function has been executed???
 function init() {
@@ -104,6 +107,7 @@ function init() {
                     break;
 
                 case "Quit":
+                    quit();
                     break;
 
                 default:

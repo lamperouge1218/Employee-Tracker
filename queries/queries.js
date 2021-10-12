@@ -187,16 +187,26 @@ function addRoles() {
 };
 
 function addEmployees() {
+    const roleManJoin = `
+    SELECT _role.id AS role_id, _role.title, managers.id, managers.first_name, managers.last_name
+    FROM _role 
+    LEFT JOIN (SELECT id, first_name, last_name, role_id
+    FROM employee WHERE manager_id 
+    IS NULL) AS managers ON _role.id = managers.role_id`;
+
     addEmployee[2].choices = [];
     addEmployee[3].choices = ["None",];
 
-    db.query("SELECT _role.id AS role_id, _role.title, employee.id, employee.first_name, employee.last_name FROM _role INNER JOIN employee ON _role.id = employee.role_id WHERE manager_id IS NULL" , function (err, results) {
+    db.query(roleManJoin, function (err, results) {
         if (err) {
             throw err;
         }
+        console.log(results);
         results.forEach(data => {
+            if (data.id !== null) {
+                addEmployee[3].choices.push(`${data.first_name} ${data.last_name}`)
+            }
             addEmployee[2].choices.push(data.title);
-            addEmployee[3].choices.push(`${data.first_name} ${data.last_name}`)
         })
         console.log(addEmployee[2].choices);
         console.log(addEmployee[3].choices);
