@@ -189,26 +189,28 @@ function addRoles() {
 function addEmployees() {
     addEmployee[2].choices = [];
     addEmployee[3].choices = ["None", ];
-    db.query("SELECT id, title FROM _role", function (err, results) {
+    db.query("SELECT id, title FROM _role", function (err, roleResults) {
         if (err) {
             throw err;
         }
-        results.forEach(roleTitleRes => {
+        roleResults.forEach(roleTitleRes => {
             addEmployee[2].choices.push(roleTitleRes.title)
         })
     })
 
-    db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, results) {
+    db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, empResults) {
         if (err) {
             throw err;
         }
-        results.forEach(roleManId => {
+        empResults.forEach(roleManId => {
             addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
         })
         inquirer
         .prompt(addEmployee)
         .then((response) => {
             console.log(response);
+            let empRoleId = "";
+            let empManId = "";
             // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
             // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
         })
