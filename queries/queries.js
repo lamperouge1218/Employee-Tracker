@@ -266,9 +266,11 @@ function updateEmployeeRole() {
             throw err;
         }
         results.forEach(data => {
-            updateEmpRole[0].choices.push(`${data.first_name} ${data.last_name}`)
+            updateEmpRole[0].choices.push(`${data.first_name} ${data.last_name}`);
+            updateEmpRole[1].choices.push(data.title);
         })
         console.log(updateEmpRole[0].choices);
+        console.log(updateEmpRole[1].choices);
     })
     // Get a list of employees pushed onto question array
     // Provide user a list of available roles to give the employee
