@@ -269,12 +269,32 @@ function updateEmployeeRole() {
             updateEmpRole[0].choices.push(`${data.first_name} ${data.last_name}`);
             updateEmpRole[1].choices.push(data.title);
         })
-        console.log(updateEmpRole[0].choices);
-        console.log(updateEmpRole[1].choices);
+
+        inquirer
+            .prompt(updateEmpRole)
+            .then((response) => {
+                let empNewRoleId = "";
+                let empFirstName = "";
+                let empLastName = "";
+                results.forEach(data => {
+                    if (data.title === response.updateRole2) {
+                        empNewRoleId = data.role_id;
+
+                    }
+                })
+                const firstLast = response.updateRole.split(" ");
+
+                db.query(`UPDATE employee SET role_id = ${empNewRoleId} WHERE employee.first_name = "${firstLast[0]}" AND employee.last_name = "${firstLast[1]}"`, function (err, results) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.table(results);
+
+                })
+            })
     })
-    // Get a list of employees pushed onto question array
-    // Provide user a list of available roles to give the employee
-    // WHAT NEEDS TO CHANGE IS THE role_id ON THE EMPLOYEE TABLE
 }
+// Query to change an employee's role_id to the id of the role that was selected by the user during the inquirer prompt
+
 
 module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees, updateEmployeeRole }
