@@ -208,6 +208,7 @@ function addEmployees() {
             }
             addEmployee[2].choices.push(data.title);
         })
+
         inquirer
             .prompt(addEmployee)
             .then((response) => {
@@ -220,6 +221,8 @@ function addEmployees() {
                     }
                     if (`${data.first_name} ${data.last_name}` === response.empManager) {
                         empManId = data.id
+                    } else {
+                        empManId = "NULL"
                     }
 
                 })
@@ -237,15 +240,15 @@ function addEmployees() {
     //     empResults.forEach(roleManId => {
     //         addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
     //     })
-    inquirer
-        .prompt(addEmployee)
-        .then((response) => {
-            console.log(response);
-            let empRoleId = "";
-            let empManId = "";
-            // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
-            // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
-        })
+    // inquirer
+    //     .prompt(addEmployee)
+    //     .then((response) => {
+    //         console.log(response);
+    //         let empRoleId = "";
+    //         let empManId = "";
+    //         // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
+    //         // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+    //     })
     // })
 
 
