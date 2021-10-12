@@ -145,7 +145,13 @@ function addDepartment() {
         .prompt(addDept)
         .then((response) => {
             console.log(response);
-            // Query function to put information added into the dept table
+            // Query function to put user-supplied department into the department table
+            db.query(`INSERT INTO department(name) VALUES ("${response.addDept}")`, function (err, results) {
+                if (err) {
+                    throw err;
+                }
+                console.log("Your department has been added to the database!")
+            })
         })
 };
 
@@ -177,7 +183,7 @@ function addRoles() {
                     }
                 })
                 // Query function to put information added into the role table
-                db.query(`INSERT INTO _role(title, salary, department_id) VALUES ("${response.addRoleTitle}", ${response.addRoleSalary}, ${addRoleId});`, function (err, results) {
+                db.query(`INSERT INTO _role(title, salary, department_id) VALUES ("${response.addRoleTitle}", ${response.addRoleSalary}, ${addRoleId})`, function (err, results) {
                     if (err) {
                         throw err;
                     }
