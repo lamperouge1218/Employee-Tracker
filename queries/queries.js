@@ -89,24 +89,17 @@ const addEmployee = [
     },
 
     {
-        type: "input",
+        type: "list",
         name: "empRole",
         message: "What is the Employee's role?",
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("Please enter a role");
-                return false;
-            }
-        },
+        choices: [],
     },
 
     {
         type: "list",
         name: "empManager",
-        message: "What is the ID of this employee's manager?",
-        choices: [2, 4, 6, 8, 10, 12],
+        message: "Who is this employee's managaer?",
+        choices: [],
     },
 ];
 
@@ -191,10 +184,11 @@ function addRoles() {
                 })
             });
     });
-
 };
 
 function addEmployees() {
+    addEmployee[2].choices = [];
+    addEmployee[3].choices = [];
     inquirer
         .prompt(addEmployee)
         .then((response) => {
