@@ -208,9 +208,26 @@ function addEmployees() {
             }
             addEmployee[2].choices.push(data.title);
         })
-        console.log(addEmployee[2].choices);
-        console.log(addEmployee[3].choices);
+        inquirer
+            .prompt(addEmployee)
+            .then((response) => {
+                console.log(response);
+                let empRoleId = "";
+                let empManId = "";
+                results.forEach(data => {
+                    if (data.title === response.empRole) {
+                        empRoleId = data.role_id;
+                    }
+                    if (`${data.first_name} ${data.last_name}` === response.empManager) {
+                        empManId = data.id
+                    }
 
+                })
+                console.log(empRoleId);
+                console.log(empManId);
+                // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
+                // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+            })
     })
 
     // db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, empResults) {
@@ -220,15 +237,15 @@ function addEmployees() {
     //     empResults.forEach(roleManId => {
     //         addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
     //     })
-    //     inquirer
-    //         .prompt(addEmployee)
-    //         .then((response) => {
-    //             console.log(response);
-    //             let empRoleId = "";
-    //             let empManId = "";
-    //             // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
-    //             // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
-    //         })
+    inquirer
+        .prompt(addEmployee)
+        .then((response) => {
+            console.log(response);
+            let empRoleId = "";
+            let empManId = "";
+            // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
+            // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+        })
     // })
 
 
