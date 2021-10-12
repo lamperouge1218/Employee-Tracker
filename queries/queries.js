@@ -171,7 +171,7 @@ function addRoles() {
                 // department selected by user
                 results.forEach(department => {
                     // If the above is true, addRoleId now has the value of that department's id
-                    if (department.name === response.addRoleDept){
+                    if (department.name === response.addRoleDept) {
                         addRoleId = department.id;
                     }
                 })
@@ -188,8 +188,9 @@ function addRoles() {
 
 function addEmployees() {
     addEmployee[2].choices = [];
-    addEmployee[3].choices = ["None", ];
-    db.query("SELECT id, title FROM _role", function (err, roleResults) {
+    addEmployee[3].choices = ["None",];
+
+    db.query("SELECT _role.id, _role.title, employee.id, employee.first_name, employee.last_name FROM _role INNER JOIN employee ON _role.id = employee.role_id" , function (err, roleResults) {
         if (err) {
             throw err;
         }
@@ -206,17 +207,17 @@ function addEmployees() {
             addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
         })
         inquirer
-        .prompt(addEmployee)
-        .then((response) => {
-            console.log(response);
-            let empRoleId = "";
-            let empManId = "";
-            // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
-            // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
-        })
+            .prompt(addEmployee)
+            .then((response) => {
+                console.log(response);
+                let empRoleId = "";
+                let empManId = "";
+                // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
+                // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+            })
     })
 
-    
+
 };
 
 module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees }
