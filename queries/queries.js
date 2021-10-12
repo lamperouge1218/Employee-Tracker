@@ -189,8 +189,6 @@ function addRoles() {
 function addEmployees() {
     addEmployee[2].choices = [];
     addEmployee[3].choices = ["None", ];
-    // db query needs to retun list of existing roles from _roles 
-    // and also a list of employees with NULL as manager_id
     db.query("SELECT id, title FROM _role", function (err, results) {
         if (err) {
             throw err;
@@ -199,13 +197,24 @@ function addEmployees() {
             addEmployee[2].choices.push(roleTitleRes.title)
         })
     })
-//     inquirer
-//         .prompt(addEmployee)
-//         .then((response) => {
-//             console.log(response);
-//             // Query function to put information added into the employee table
-//             // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${response.empRole}, ${response.empManager},`))
-//         })
+
+    db.query("SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL", function (err, results) {
+        if (err) {
+            throw err;
+        }
+        results.forEach(roleManId => {
+            addEmployee[3].choices.push(`${roleManId.first_name} ${roleManId.last_name}`)
+        })
+        inquirer
+        .prompt(addEmployee)
+        .then((response) => {
+            console.log(response);
+            // We need role_id and manager_id to be added to the VALUES to be inserted into the employee table
+            // db.query(INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (`${response.firstName}, ${response.lastName}, ${role_id (find this)}, ${manager_id (find this)},`))
+        })
+    })
+
+    
 };
 
 module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees }
