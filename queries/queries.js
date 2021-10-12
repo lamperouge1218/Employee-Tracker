@@ -189,6 +189,9 @@ function addRoles() {
 function addEmployees() {
     addEmployee[2].choices = [];
     addEmployee[3].choices = [];
+    // db query needs to retun list of existing roles from _roles 
+    // and also a list of employees with NULL as manager_id
+    db.query("")
     inquirer
         .prompt(addEmployee)
         .then((response) => {
