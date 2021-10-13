@@ -121,84 +121,78 @@ const updateEmpRole = [
 ];
 
 // Database query to select all information from the department table.
-function listDepartments() {
-    db.query('SELECT * FROM department', function (err, results) {
-        if (err) {
-            throw err;
-        }
-        console.table(results);
-    });
+async function listDepartments() {
+    await db.promise().query('SELECT * FROM department').then(([rows, fields]) => {
+        console.table(rows);
+    })
+        .catch((error) => {
+            console.log(error);
+        })
 };
 
 // Database query to select all information from the _role table.
-function listRoles() {
-    db.query('SELECT * FROM _role', function (err, results) {
-        if (err) {
-            throw err;
-        }
-        console.table(results);
-    });
+async function listRoles() {
+    await db.promise().query('SELECT * FROM _role').then(([rows, fields]) => {
+        console.table(rows);
+    })
+        .catch((error) => {
+            console.log(error);
+        })
 };
 
 // Database query to select all information from the employee table.
-function listEmployees() {
-    db.query('SELECT * FROM employee', function (err, results) {
-        if (err) {
-            throw err;
-        }
-        console.table(results);
-    });
+async function listEmployees() {
+    await db.promise().query('SELECT * FROM employee').then(([rows, fields]) => {
+        console.table(rows);
+    })
+        .catch((error) => {
+            console.log(error);
+        })
 };
 
 // Function to add a department to the deparment table in the name column
-function addDepartment() {
-    inquirer
+async function addDepartment() {
+    await inquirer
         .prompt(addDept)
-        .then((response) => {
+        .then(async (response) => {
             console.log(response);
             // Query function to put user-supplied department into the department table
-            db.query(`INSERT INTO department(name) VALUES ("${response.addDept}")`, function (err, results) {
-                if (err) {
-                    throw err;
-                }
+            await db.promise().query(`INSERT INTO department(name) VALUES ("${response.addDept}")`).then(([rows, fields]) => {
                 console.log("Your department has been added to the database!")
             })
+        })
+        .catch((error) => {
+            console.log(error);
         })
 };
 
 // Function to add a role to the _role table utitlizing the department_id
-function addRoles() {
+async function addRoles() {
     // Sets the choices array in the addRoles question to empty
     addRole[2].choices = [];
     // Query to select both id and name column from department table
-    db.query("SELECT id, name FROM department", function (err, results) {
-        if (err) {
-            throw err;
-        }
+    await db.promise().query("SELECT id, name FROM department").then(async ([rows, fields]) => {
         // Iterates over the array of results provided by the above query
-        results.forEach(department => {
+        rows.forEach(department => {
             // Pushes a string, department.name, onto the addRole.choices array to populate with current data from db
             addRole[2].choices.push(department.name)
         })
         // Inquirer prompt to ask questions to user
-        inquirer
+        await inquirer
             .prompt(addRole)
-            .then((response) => {
+            .then(async (response) => {
                 // Creates addRoleId variable so that proper attribution to proper department can be done later
                 let addRoleId = "";
                 // Iterates, again, over the results array, this time checking that department.name matches the 
                 // department selected by user
-                results.forEach(department => {
+                rows.forEach(department => {
                     // If the above is true, addRoleId now has the value of that department's id
                     if (department.name === response.addRoleDept) {
                         addRoleId = department.id;
                     }
                 })
                 // Query function to put information added into the role table
-                db.query(`INSERT INTO _role(title, salary, department_id) VALUES ("${response.addRoleTitle}", ${response.addRoleSalary}, ${addRoleId})`, function (err, results) {
-                    if (err) {
-                        throw err;
-                    }
+                await db.promise().query(`INSERT INTO _role(title, salary, department_id) VALUES ("${response.addRoleTitle}", ${response.addRoleSalary}, ${addRoleId})`).then(([rows, fields]) => {
                     console.log("Your role has been added to the database!")
                 })
             });
@@ -207,7 +201,7 @@ function addRoles() {
 
 // Fucntion to add an employee to the employee table utilizing manager id to set the proper employee as their manager
 // If the employee has no manager, their manager_id will be set to NULL
-function addEmployees() {
+async function addEmployees() {
     // const containing our join query. The query looks to get data with which to fill out the 
     // choices for the last two questions in the addEmployee inquirer prompt
     const roleManJoin = `
@@ -222,46 +216,50 @@ function addEmployees() {
     addEmployee[2].choices = [];
     addEmployee[3].choices = ["None",];
 
-    db.query(roleManJoin, function (err, results) {
-        if (err) {
-            throw err;
-        }
-        results.forEach(data => {
+    // Our actual query request from the information specified above
+    await db.promise().query(roleManJoin).then(async ([rows, fields]) => {
+        // Iterating over the results array sent back from our query
+        rows.forEach(data => {
+            // If the id column of the data returned, in this case manager_id from the employee table,
+            // is not null, 
             if (data.id !== null) {
                 addEmployee[3].choices.push(`${data.first_name} ${data.last_name}`)
             }
             addEmployee[2].choices.push(data.title);
         })
 
-        inquirer
+        await inquirer
             .prompt(addEmployee)
-            .then((response) => {
+            .then(async (response) => {
                 let empRoleId = "";
-                let empManId = "";
-                results.forEach(data => {
+                let empManId = "NULL";
+                rows.forEach(data => {
                     if (data.title === response.empRole) {
                         empRoleId = data.role_id;
                     }
                     if (`${data.first_name} ${data.last_name}` === response.empManager) {
                         empManId = data.id
-                    } else {
-                        empManId = "NULL"
                     }
-
                 })
-                db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES ("${response.firstName}", "${response.lastName}", ${empRoleId}, ${empManId})`, function (err, results) {
-                    if (err) {
-                        throw err;
-                    }
-                    console.log("Your role has been added to the database!")
+                console.log(empRoleId);
+                console.log(empManId);
+                await db.promise().query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES ("${response.firstName}", "${response.lastName}", ${empRoleId}, ${empManId})`).then(([rows, fields]) => {
+                    console.log("Your employee has been added to the database!")
                 })
+                .catch((error) => {
+                    console.log(error);
+                })
+                
+            })
+            .catch((error) => {
+                console.log(error);
             })
     })
 }
 
 // Function to update an employee's role. Sets the employee's new role_id 
 // to the proper id for the role selected
-function updateEmployeeRole() {
+async function updateEmployeeRole() {
     const employeeRoleTable = `
     SELECT employee.first_name, employee.last_name, employee.role_id, _role.title
     FROM employee 
@@ -270,20 +268,17 @@ function updateEmployeeRole() {
     updateEmpRole[0].choices = [];
     updateEmpRole[1].choices = [];
 
-    db.query(employeeRoleTable, function (err, results) {
-        if (err) {
-            throw err;
-        }
-        results.forEach(data => {
+    await db.promise().query(employeeRoleTable).then(async ([rows, fields]) => {
+        rows.forEach(data => {
             updateEmpRole[0].choices.push(`${data.first_name} ${data.last_name}`);
             updateEmpRole[1].choices.push(data.title);
         })
 
-        inquirer
+        await inquirer
             .prompt(updateEmpRole)
-            .then((response) => {
+            .then(async (response) => {
                 let empNewRoleId = "";
-                results.forEach(data => {
+                rows.forEach(data => {
                     if (data.title === response.updateRole2) {
                         empNewRoleId = data.role_id;
 
@@ -292,13 +287,19 @@ function updateEmployeeRole() {
 
                 const firstLast = response.updateRole.split(" ");
 
-                db.query(`UPDATE employee SET role_id = ${empNewRoleId} WHERE employee.first_name = "${firstLast[0]}" AND employee.last_name = "${firstLast[1]}"`, function (err, results) {
-                    if (err) {
-                        throw err;
-                    }
-                    console.table(results);
+                await db.promise().query(`UPDATE employee SET role_id = ${empNewRoleId} WHERE employee.first_name = "${firstLast[0]}" AND employee.last_name = "${firstLast[1]}"`).then(([rows, fields]) => {
+                    console.log("This employee's role has been updated!")
+                })
+                .catch((error) => {
+                    console.log(error);
                 })
             })
+            .catch((error) => {
+                console.log(error);
+            })
+    })
+    .catch((error) => {
+        console.log(error);
     })
 }
 

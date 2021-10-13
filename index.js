@@ -43,48 +43,48 @@ const initQuestion = [
 ];
 
 // Initial function which begins the inquirer prompt
-async function init() {
+function init() {
     console.log("Welcome to the Employee Management System");
     inquirer
         .prompt(initQuestion)
-        .then((response) => {
+        .then(async (response) => {
             switch (response.selectList) {
                 case "View All Departments":
-                     queries.listDepartments();
-                    console.log("fart");
+                    await queries.listDepartments();
                     break;
 
                 case "View All Roles":
-                    queries.listRoles();
+                    await queries.listRoles();
                     break;
 
                 case "View All Employees":
-                    queries.listEmployees();
+                    await queries.listEmployees();
                     break;
 
                 case "Add Department":
-                    queries.addDepartment()
+                    await queries.addDepartment()
                     break;
 
                 case "Add Role":
-                    queries.addRoles()
+                    await queries.addRoles()
                     break;
 
                 case "Add Employee":
-                    queries.addEmployees()
+                    await queries.addEmployees()
                     break;
 
                 case "Update Employee Role":
-                    queries.updateEmployeeRole();
+                    await queries.updateEmployeeRole();
                     break;
 
                 case "Quit":
-                    queries.quit();
+                    await queries.quit();
                     break;
 
                 default:
                     break;
             }
+            init();
 
         })
 };
