@@ -121,7 +121,7 @@ const updateEmpRole = [
 ];
 
 // Database query to select all information from the department table.
-function listDepartments() {
+async function listDepartments() {
     db.query('SELECT * FROM department', function (err, results) {
         if (err) {
             throw err;

@@ -43,7 +43,7 @@ const initQuestion = [
 ];
 
 // Quit function to exit out of application
-function quit () {
+function quit() {
     process.exit();
 }
 
@@ -52,11 +52,10 @@ function init() {
     console.log("Welcome to the Employee Management System");
     inquirer
         .prompt(initQuestion)
-        .then(response => {
-            console.log(response);
+        .then((response) => {
             switch (response.selectList) {
                 case "View All Departments":
-                    queries.listDepartments();                    
+                    queries.listDepartments();
                     break;
 
                 case "View All Roles":
