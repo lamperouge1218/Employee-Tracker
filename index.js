@@ -48,9 +48,9 @@ function quit() {
 }
 
 // .then statements that then call init() after the function has been executed???
-function init() {
+async function init() {
     console.log("Welcome to the Employee Management System");
-    inquirer
+    await inquirer
         .prompt(initQuestion)
         .then((response) => {
             switch (response.selectList) {
@@ -89,7 +89,9 @@ function init() {
                 default:
                     break;
             }
+            
         })
+        init();
 };
 
 init();
