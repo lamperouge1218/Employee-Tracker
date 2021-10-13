@@ -35,6 +35,11 @@ To install necessary dependencies, run the following command:
 
     npm i
 
+Additionally, mySQL is required as a separate install. To set up database and seed it, run the following commands in your mySQL shell in this order:
+
+    source db/schema.sql
+    source db/seeds.sql
+
 ## Usage
 
 Run the application with the following command:
