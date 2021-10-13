@@ -6,6 +6,13 @@
 
 This application allows for vision into and manipulation of an employee database for a sample company. The database, utilizing mySQL, holds tables for deparments, roles, and individual employees. Inquirer is used to run command-line prompts in which the user can see data for specific tables, add departments and roles, and update employee information.  
 
+Here is a screenshot of the app: 
+
+![Employee Management Screenshot](./assets/employeetrackerscreenshot.PNG)
+
+
+
+
 Here is a link to the video of this project in action: [Test of Application]()
 
 ## Table of Contents

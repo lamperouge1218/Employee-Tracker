@@ -42,20 +42,16 @@ const initQuestion = [
     },
 ];
 
-// Quit function to exit out of application
-function quit() {
-    process.exit();
-}
-
-// .then statements that then call init() after the function has been executed???
+// Initial function which begins the inquirer prompt
 async function init() {
     console.log("Welcome to the Employee Management System");
-    await inquirer
+    inquirer
         .prompt(initQuestion)
         .then((response) => {
             switch (response.selectList) {
                 case "View All Departments":
-                    queries.listDepartments();
+                     queries.listDepartments();
+                    console.log("fart");
                     break;
 
                 case "View All Roles":
@@ -83,15 +79,14 @@ async function init() {
                     break;
 
                 case "Quit":
-                    quit();
+                    queries.quit();
                     break;
 
                 default:
                     break;
             }
-            
+
         })
-        init();
 };
 
 init();

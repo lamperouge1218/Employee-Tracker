@@ -121,7 +121,7 @@ const updateEmpRole = [
 ];
 
 // Database query to select all information from the department table.
-async function listDepartments() {
+function listDepartments() {
     db.query('SELECT * FROM department', function (err, results) {
         if (err) {
             throw err;
@@ -150,6 +150,7 @@ function listEmployees() {
     });
 };
 
+// Function to add a department to the deparment table in the name column
 function addDepartment() {
     inquirer
         .prompt(addDept)
@@ -165,6 +166,7 @@ function addDepartment() {
         })
 };
 
+// Function to add a role to the _role table utitlizing the department_id
 function addRoles() {
     // Sets the choices array in the addRoles question to empty
     addRole[2].choices = [];
@@ -203,7 +205,11 @@ function addRoles() {
     });
 };
 
+// Fucntion to add an employee to the employee table utilizing manager id to set the proper employee as their manager
+// If the employee has no manager, their manager_id will be set to NULL
 function addEmployees() {
+    // const containing our join query. The query looks to get data with which to fill out the 
+    // choices for the last two questions in the addEmployee inquirer prompt
     const roleManJoin = `
     SELECT _role.id AS role_id, _role.title, managers.id, managers.first_name, managers.last_name
     FROM _role 
@@ -211,6 +217,8 @@ function addEmployees() {
     FROM employee WHERE manager_id 
     IS NULL) AS managers ON _role.id = managers.role_id`;
 
+    // Sets the choice arrays in the addEmployee inquirer prompt to empty sets 
+    // (empManager always starts with none as the first option)
     addEmployee[2].choices = [];
     addEmployee[3].choices = ["None",];
 
@@ -245,13 +253,14 @@ function addEmployees() {
                     if (err) {
                         throw err;
                     }
-                    console.table(results);
-
+                    console.log("Your role has been added to the database!")
                 })
             })
     })
 }
 
+// Function to update an employee's role. Sets the employee's new role_id 
+// to the proper id for the role selected
 function updateEmployeeRole() {
     const employeeRoleTable = `
     SELECT employee.first_name, employee.last_name, employee.role_id, _role.title
@@ -274,14 +283,13 @@ function updateEmployeeRole() {
             .prompt(updateEmpRole)
             .then((response) => {
                 let empNewRoleId = "";
-                let empFirstName = "";
-                let empLastName = "";
                 results.forEach(data => {
                     if (data.title === response.updateRole2) {
                         empNewRoleId = data.role_id;
 
                     }
                 })
+
                 const firstLast = response.updateRole.split(" ");
 
                 db.query(`UPDATE employee SET role_id = ${empNewRoleId} WHERE employee.first_name = "${firstLast[0]}" AND employee.last_name = "${firstLast[1]}"`, function (err, results) {
@@ -289,12 +297,15 @@ function updateEmployeeRole() {
                         throw err;
                     }
                     console.table(results);
-
                 })
             })
     })
 }
-// Query to change an employee's role_id to the id of the role that was selected by the user during the inquirer prompt
 
+// Quit function to exit out of application
+function quit() {
+    process.exit();
+}
 
-module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees, updateEmployeeRole }
+// Exports all of the functions above to index.js
+module.exports = { listDepartments, listRoles, listEmployees, addDepartment, addRoles, addEmployees, updateEmployeeRole, quit }
